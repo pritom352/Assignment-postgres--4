@@ -7,4 +7,6 @@ dotenv.config({
 
 export default {
     PORT: process.env.PORT || 3000,
-    DATABASE_URL: process.env.DATABASE_URL}
+    DATABASE_URL: process.env.DATABASE_URL,
+    bcrypt_salt_rounds: process.env.bcrypt_salt_rounds || 10
+}
