@@ -7,12 +7,29 @@ import { authService } from "./auth.service";
 const loginUser = catchAshync(async (req: Request, res: Response,next:NextFunction) =>{
     const payload = req.body;
 
-    const loginResult = await authService.loginUser(payload);
+    const {accessToken, refreshToken} = await authService.loginUser(payload);
+
+res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "none",
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+});
+
+res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "none",
+    maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+});
+
+
+
     sendResponse(res,{
         success: true,
         statusCode: 200,
         message: "Login successful",
-        data: loginResult
+        data: { accessToken, refreshToken }
     })
 })
 
