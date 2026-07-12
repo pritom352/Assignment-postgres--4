@@ -5,6 +5,9 @@ import config from "../../config";
 import { userService } from "./user.service";
 import { catchAshync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
+import jwt from "jsonwebtoken";
+import { verifyToken } from "../../utils/verifiedToken";
+import { Role } from "../../../generated/prisma/enums";
 
 // const registerUser = async (req: Request, res: Response) => {
 //     try{const payload = req.body;
@@ -35,6 +38,30 @@ const registerUser = catchAshync(async (req: Request, res: Response, next:NextFu
     })
     })
 
+const getMyProfile = catchAshync(async (req: Request, res: Response, next:NextFunction) => {
+
+    // res.send("Get my profile endpoint hit")
+    // const {accessToken} = req.cookies;
+
+    // const verifiedToken = jwt.verify(accessToken, config.jwt_secret as string)
+    
+    // const verifiedToken = verifyToken(accessToken, config.jwt_secret as string)
+
+
+
+    const profile = await userService.getMyProfileFromDB(req.user?.id as string);
+    
+
+    sendResponse(res,{
+        success: true,
+        statusCode: 200,
+        message: "Get my profile endpoint hit",
+        data: profile
+    })
+    
+})
+
 export const userController = {
-    registerUser
+    registerUser,
+    getMyProfile
 }

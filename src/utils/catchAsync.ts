@@ -3,7 +3,13 @@ import httpStatus from "http-status";
  export const catchAshync = (fn:RequestHandler) => {
     return async (req:Request, res:Response, next:NextFunction) => {
         try{ await fn(req, res, next);}catch(error){
-            console.error("Error registering user:", error);
+            // console.error("Error registering user:", error);
+            console.error("Full Error:", error);
+
+if (error instanceof Error) {
+  console.error("Message:", error.message);
+  console.error("Stack:", error.stack);
+}
     res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
         success: false,
         statusCode: httpStatus.INTERNAL_SERVER_ERROR,
