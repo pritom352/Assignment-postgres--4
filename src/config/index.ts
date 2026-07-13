@@ -11,5 +11,7 @@ export default {
     bcrypt_salt_rounds: process.env.bcrypt_salt_rounds || 10,
 
     jwt_secret: process.env.jwt_secret,
-    jwt_refresh_secret: process.env.jwt_refresh_secret
+    jwt_refresh_secret: process.env.jwt_refresh_secret,
+        jwt_access_expires_in : process.env.JWT_ACCESS_EXPIRES_IN!,
+
 }  
