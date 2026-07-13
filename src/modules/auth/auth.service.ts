@@ -1,8 +1,9 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "../../lib/prisma";
 import { ILoginUser } from "./auth.interface"
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
 import config from "../../config";
+import { jwtUtils } from "../../utils/jwt";
 
 const loginUser = async (payload: ILoginUser) => {
 const { email, password } = payload;
@@ -18,7 +19,7 @@ if(!isPasswordmatch){
 const accessToken = jwt.sign({ id: user.id, email: user.email, role: user.role }, config.jwt_secret as string, { expiresIn: '7d' });
 
 
-
+console.log(config.jwt_secret,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 const refreshToken = jwt.sign({ id: user.id, email: user.email, role: user.role }, config.jwt_refresh_secret as string, { expiresIn: '30d' });
 
 return {
@@ -28,6 +29,49 @@ return {
 }
 
 
+
+const refreshToken= async (refreshToken:string)=>{
+
+    const verifiedRefreshToken = jwtUtils.verifyToken(refreshToken, config.jwt_refresh_secret as string)
+
+
+    if(!verifiedRefreshToken.success){
+        throw new Error(verifiedRefreshToken.error)
+    }
+    const {id}= verifiedRefreshToken.data as JwtPayload;
+
+    const user = await prisma.user.findFirstOrThrow({
+        where:{
+            id
+        }
+    })
+
+  
+    if(user.status === "SUSPENDED"){
+        throw new Error("User is SUSPENDED")
+    }
+
+
+    const jwtPayload ={
+        id,
+        email:user.email,
+        role:user.role
+    }
+
+    const accessToken =jwt.sign(
+        jwtPayload,
+        config.jwt_secret as string,{ expiresIn: '7d' }
+    )
+
+
+    return {
+    accessToken
+    }
+
+}
+
+
 export const authService = {
-    loginUser
+    loginUser,
+    refreshToken
 }

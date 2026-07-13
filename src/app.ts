@@ -30,6 +30,6 @@ app.get('/', (req:Request, res:Response) => {
 
 // app.post()
 app.use("/api/auth",userRouter)
-app.use("/api/auth/login",authRoutes)
+app.use("/api/auth",authRoutes)
 
 export default app
