@@ -29,9 +29,24 @@ const getGear = catchAshync(async (req:Request, res:Response, next:NextFunction)
 
 })
 
+const getGearById = catchAshync(async(req:Request, res:Response, next:NextFunction)=>{
+    const gearId = req.params.id
+    if(!gearId){
+        throw new Error("Gear Id Required In Params.")
+    }
+    const result = await gearService.getGearById(gearId as string)
+     sendResponse(res,{
+        success:true,
+        statusCode: 200,
+        message:" Gear Get SuccessFully",
+        data:result
+    })
+})
+
 
 
 export const gearController ={
     createGear,
-    getGear
+    getGear,
+    getGearById 
 }

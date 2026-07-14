@@ -28,7 +28,19 @@ const getAllGear = async ()=>{
     return allGear
 }
 
+const getGearById = async(gearId:string)=>{
+    const getGear = await prisma.gearItem.findUniqueOrThrow(
+        {
+            where:{
+                id:gearId
+            }
+        }
+    )
+    return getGear
+}
+
 export const gearService ={
     createGear,
-    getAllGear
+    getAllGear,
+    getGearById
 }
