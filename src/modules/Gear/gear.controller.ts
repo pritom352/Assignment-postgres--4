@@ -18,7 +18,20 @@ const createGear =catchAshync(async (req:Request, res:Response, next:NextFunctio
 })
 
 
+const getGear = catchAshync(async (req:Request, res:Response, next:NextFunction)=>{
+    const result = await gearService.getAllGear()
+    sendResponse(res,{
+        success:true,
+        statusCode: 200,
+        message:"All Gear Get SuccessFully",
+        data:result
+    })
+
+})
+
+
 
 export const gearController ={
-    createGear
+    createGear,
+    getGear
 }

@@ -23,6 +23,12 @@ const createGear = async(payload:ICreateGear, id:string)=>{
 }
 
 
+const getAllGear = async ()=>{
+    const allGear = await prisma.gearItem.findMany()
+    return allGear
+}
+
 export const gearService ={
-    createGear
+    createGear,
+    getAllGear
 }
