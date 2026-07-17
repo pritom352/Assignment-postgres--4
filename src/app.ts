@@ -7,6 +7,7 @@ import config from './config'
 import { userRouter } from './modules/user/user.route'
 import { authRoutes } from './modules/auth/auth.route'
 import { gearRouters } from './modules/Gear/gear.route'
+import { categoryRouter } from './modules/category/category.route'
 const app: Application= express()
 
  
@@ -33,5 +34,7 @@ app.get('/', (req:Request, res:Response) => {
 app.use("/api/auth",userRouter)
 app.use("/api/auth",authRoutes)
 app.use("/api",gearRouters)
+
+app.use("/api", categoryRouter);
 
 export default app
