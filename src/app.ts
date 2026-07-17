@@ -8,6 +8,7 @@ import { userRouter } from './modules/user/user.route'
 import { authRoutes } from './modules/auth/auth.route'
 import { gearRouters } from './modules/Gear/gear.route'
 import { categoryRouter } from './modules/category/category.route'
+import { rentalOrderRouter } from './modules/rentalOrder/rentalOrder.router'
 const app: Application= express()
 
  
@@ -36,5 +37,7 @@ app.use("/api/auth",authRoutes)
 app.use("/api",gearRouters)
 
 app.use("/api", categoryRouter);
+app.use("/api/rentals",rentalOrderRouter
+)
 
 export default app
