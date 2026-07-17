@@ -7,7 +7,7 @@ const router = Router()
 
 router.post("/",auth(Role.CUSTOMER, Role.ADMIN, Role.PROVIDER),rentalOrderController.createRentalOrder)
 
-// router.get("/rentals",auth(Role.CUSTOMER),rentalOrderController)
+router.get("/",auth(Role.CUSTOMER,Role.PROVIDER,Role.ADMIN),rentalOrderController.getMyRentalOrders)
 
 // router.get("/rentals/:id",auth(Role.CUSTOMER),rentalOrderController)
 

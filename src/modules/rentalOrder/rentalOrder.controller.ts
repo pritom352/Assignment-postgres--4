@@ -20,14 +20,23 @@ const createRentalOrder = catchAshync(async(req:Request,res:Response, next:NextF
     
 })
 
+const getMyRentalOrders = catchAshync(async (req, res) => {
+  const result = await rentalOrderService.getMyRentalOrders(req.user?.id as string);
 
+  sendResponse(res, {
+    success: true,
+    statusCode: HttpStatus.OK,
+    message: "Rental orders retrieved successfully",
+    data: result,
+  });
+});
 
 
 
 
 
 export const rentalOrderController ={
-    createRentalOrder,
+    createRentalOrder,getMyRentalOrders
     
 
 }
