@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma";
-import { ICreateRentalOrder } from "./rentalOrder.interfact";
+import { ICreateRentalOrder, IUpdateOrderStatus } from "./rentalOrder.interfact";
 
 const createRentalOrder = async (
   payload: ICreateRentalOrder,
@@ -106,9 +106,44 @@ const getProviderOrders = async (providerId: string) => {
 };
 
 
+const updateOrderStatus = async (
+  orderId: string,
+  providerId: string,
+  payload: IUpdateOrderStatus
+) => {
+
+  const order = await prisma.rentalOrder.findUniqueOrThrow({
+    where: {
+      id: orderId,
+    },
+  });
+
+  if (order.providerId !== providerId) {
+    throw new Error("You are not authorized to update this order");
+  }
+
+  const result = await prisma.rentalOrder.update({
+    where: {
+      id: orderId,
+    },
+    data: {
+      status: payload.status,
+    },
+    include: {
+      customer: true,
+      provider: true,
+      gear: true,
+    },
+  });
+
+  return result;
+};
+
+
 export const rentalOrderService = {
 createRentalOrder,
 getMyRentalOrders,
 getRentalOrderById,
-getProviderOrders
+getProviderOrders,
+updateOrderStatus
 }

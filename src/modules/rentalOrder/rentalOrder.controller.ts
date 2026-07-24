@@ -65,10 +65,31 @@ const getProviderOrders = catchAshync(
 );
 
 
+const updateOrderStatus = catchAshync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const providerId = req.user?.id;
+    const orderId = req.params.id;
+    const payload = req.body;
+
+    const result = await rentalOrderService.updateOrderStatus(
+      orderId as string,
+      providerId as string,
+      payload
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Rental order status updated successfully",
+      data: result,
+    });
+  }
+);
+
 export const rentalOrderController ={
     createRentalOrder,getMyRentalOrders,
     getRentalOrderById,
-    getProviderOrders
-    
+    getProviderOrders,
+    updateOrderStatus    
 
 }

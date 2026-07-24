@@ -18,6 +18,10 @@ router.get(
   rentalOrderController.getProviderOrders
 );
 
-
+router.patch(
+  "/provider/orders/:id",
+  auth(Role.PROVIDER),
+  rentalOrderController.updateOrderStatus
+);
 
 export const rentalOrderRouter = router;
