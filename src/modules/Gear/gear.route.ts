@@ -13,6 +13,11 @@ router.put(
     auth(Role.PROVIDER),
     gearController.updateGear
 )
+router.delete(
+  "/provider/gear/:id",
+  auth(Role.PROVIDER),
+  gearController.deleteGear
+);
 
 
 

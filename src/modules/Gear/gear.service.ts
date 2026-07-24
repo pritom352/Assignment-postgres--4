@@ -69,9 +69,36 @@ const updateGear = async (
   return result;
 };
 
+
+
+const deleteGear = async (
+  gearId: string,
+  providerId: string
+) => {
+
+  const gear = await prisma.gearItem.findUniqueOrThrow({
+    where: {
+      id: gearId,
+    },
+  });
+
+  if (gear.providerId !== providerId) {
+    throw new Error("You are not authorized to delete this gear");
+  }
+
+  const result = await prisma.gearItem.delete({
+    where: {
+      id: gearId,
+    },
+  });
+
+  return result;
+};
+
 export const gearService ={
     createGear,
     getAllGear,
     getGearById,
-    updateGear
+    updateGear,
+    deleteGear
 }
