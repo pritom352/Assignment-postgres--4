@@ -12,5 +12,12 @@ router.get("/",auth(Role.CUSTOMER,Role.PROVIDER,Role.ADMIN),rentalOrderControlle
 router.get("/:id",auth(Role.CUSTOMER, Role.ADMIN, Role.PROVIDER),rentalOrderController.getRentalOrderById)
 
 
+router.get(
+  "/provider/orders",
+  auth(Role.PROVIDER),
+  rentalOrderController.getProviderOrders
+);
+
+
 
 export const rentalOrderRouter = router;

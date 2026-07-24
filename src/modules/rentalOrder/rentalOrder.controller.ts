@@ -44,9 +44,31 @@ const getRentalOrderById = catchAshync(async (req, res) => {
 });
 
 
+
+
+
+const getProviderOrders = catchAshync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const providerId = req.user?.id;
+
+    const result = await rentalOrderService.getProviderOrders(
+      providerId as string
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Provider orders fetched successfully",
+      data: result,
+    });
+  }
+);
+
+
 export const rentalOrderController ={
     createRentalOrder,getMyRentalOrders,
-    getRentalOrderById
+    getRentalOrderById,
+    getProviderOrders
     
 
 }
