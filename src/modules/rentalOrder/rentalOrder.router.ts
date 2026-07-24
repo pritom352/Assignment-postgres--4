@@ -9,7 +9,7 @@ router.post("/",auth(Role.CUSTOMER, Role.ADMIN, Role.PROVIDER),rentalOrderContro
 
 router.get("/",auth(Role.CUSTOMER,Role.PROVIDER,Role.ADMIN),rentalOrderController.getMyRentalOrders)
 
-// router.get("/rentals/:id",auth(Role.CUSTOMER),rentalOrderController)
+router.get("/:id",auth(Role.CUSTOMER, Role.ADMIN, Role.PROVIDER),rentalOrderController.getRentalOrderById)
 
 
 

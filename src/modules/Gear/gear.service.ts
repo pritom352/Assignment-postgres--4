@@ -39,8 +39,39 @@ const getGearById = async(gearId:string)=>{
     return getGear
 }
 
+
+
+
+
+const updateGear = async (
+  gearId: string,
+  providerId: string,
+  payload: Partial<ICreateGear>
+) => {
+
+  const gear = await prisma.gearItem.findUniqueOrThrow({
+    where: {
+      id: gearId,
+    },
+  });
+
+  if (gear.providerId !== providerId) {
+    throw new Error("You are not authorized to update this gear");
+  }
+
+  const result = await prisma.gearItem.update({
+    where: {
+      id: gearId,
+    },
+    data: payload,
+  });
+
+  return result;
+};
+
 export const gearService ={
     createGear,
     getAllGear,
-    getGearById
+    getGearById,
+    updateGear
 }

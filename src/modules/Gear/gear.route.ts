@@ -8,7 +8,11 @@ const router = Router()
 router.post("/provider/gear",auth(Role.PROVIDER),gearController.createGear)
 router.get("/gear",gearController.getGear)
 router.get("/gear/:id",gearController.getGearById)
-
+router.put(
+    "/provider/gear/:id",
+    auth(Role.PROVIDER),
+    gearController.updateGear
+)
 
 
 

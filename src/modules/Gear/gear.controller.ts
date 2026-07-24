@@ -45,8 +45,32 @@ const getGearById = catchAshync(async(req:Request, res:Response, next:NextFuncti
 
 
 
+const updateGear = catchAshync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const providerId = req.user?.id;
+    const gearId = req.params.id;
+    const payload = req.body;
+
+    const result = await gearService.updateGear(
+      gearId as string,
+      providerId as string,
+      payload
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Gear updated successfully",
+      data: result,
+    });
+  }
+);
+
+
+
 export const gearController ={
     createGear,
     getGear,
-    getGearById 
+    getGearById,
+    updateGear
 }

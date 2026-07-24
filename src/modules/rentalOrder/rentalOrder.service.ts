@@ -64,7 +64,25 @@ const getMyRentalOrders = async (customerId: string) => {
 };
 
 
+
+
+
+const getRentalOrderById = async (id: string) => {
+  return prisma.rentalOrder.findUniqueOrThrow({
+    where: {
+      id,
+    },
+    include: {
+      gear: true,
+      customer: true,
+      provider: true,
+    },
+  });
+};
+
+
 export const rentalOrderService = {
 createRentalOrder,
-getMyRentalOrders
+getMyRentalOrders,
+getRentalOrderById
 }
