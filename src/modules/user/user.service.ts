@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import config from "../../config";
 import { prisma } from "../../lib/prisma";
-import { RegisterUserPayload } from "./user.interface";
+import { IUpdateUserStatus, RegisterUserPayload } from "./user.interface";
 
 
 
@@ -69,8 +69,38 @@ const getAllUsers = async () => {
     return result;
 };
 
+
+
+const updateUserStatus = async (
+  userId: string,
+  payload: IUpdateUserStatus
+) => {
+
+  await prisma.user.findUniqueOrThrow({
+    where: {
+      id: userId,
+    },
+  });
+
+  const result = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      status: payload.status,
+    },
+    omit: {
+      password: true,
+    },
+  });
+
+  return result;
+};
+
+
 export const userService = {
     registerUserIntoDB,
     getMyProfileFromDB,
-    getAllUsers
+    getAllUsers,
+    updateUserStatus
 }

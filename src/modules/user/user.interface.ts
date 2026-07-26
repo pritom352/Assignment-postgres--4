@@ -9,3 +9,9 @@ export interface RegisterUserPayload {
     role?: "CUSTOMER" | "PROVIDER" | "ADMIN";
     status?:"ACTIVE" | "SUSPENDED";
 }
+
+
+
+export interface IUpdateUserStatus {
+  status: "ACTIVE" | "SUSPENDED";
+}
