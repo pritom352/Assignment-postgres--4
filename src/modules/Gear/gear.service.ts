@@ -95,10 +95,29 @@ const deleteGear = async (
   return result;
 };
 
+
+const getAllGearForAdmin = async () => {
+
+ const result = await prisma.gearItem.findMany({
+  orderBy: {
+    createdAt: "desc",
+  },
+  include: {
+    provider: true,
+    category: true, 
+    rentalOrders: true,
+    reviews: true,
+  },
+});
+
+return result;
+};
+
 export const gearService ={
     createGear,
     getAllGear,
     getGearById,
     updateGear,
-    deleteGear
+    deleteGear,
+    getAllGearForAdmin
 }

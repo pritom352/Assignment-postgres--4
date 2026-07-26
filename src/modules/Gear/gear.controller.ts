@@ -88,6 +88,20 @@ const deleteGear = catchAshync(
   }
 );
 
+const getAllGearForAdmin = catchAshync(
+  async (req: Request, res: Response) => {
+
+    const result = await gearService.getAllGearForAdmin();
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "All gear listings retrieved successfully",
+      data: result,
+    });
+
+  }
+);
 
 
 export const gearController ={
@@ -95,5 +109,6 @@ export const gearController ={
     getGear,
     getGearById,
     updateGear,
-    deleteGear
+    deleteGear,
+    getAllGearForAdmin
 }

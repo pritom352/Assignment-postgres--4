@@ -19,7 +19,11 @@ router.delete(
   gearController.deleteGear
 );
 
-
+router.get(
+  "/admin/gear",
+  auth(Role.ADMIN),
+  gearController.getAllGearForAdmin
+);
 
 
 
