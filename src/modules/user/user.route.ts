@@ -19,16 +19,12 @@ router.post("/register", userController.registerUser)
 
 
 
-
-
-
-
-
-
-
-
-
-
 router.get("/me",auth(Role.ADMIN,Role.CUSTOMER,Role.PROVIDER) ,userController.getMyProfile)
+
+router.get(
+  "/admin/users",
+  auth(Role.ADMIN),
+  userController.getAllUsers
+);
 
 export const userRouter = router

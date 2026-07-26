@@ -61,7 +61,22 @@ const getMyProfile = catchAshync(async (req: Request, res: Response, next:NextFu
     
 })
 
+
+const getAllUsers = catchAshync(async (req: Request, res: Response) => {
+
+    const result = await userService.getAllUsers();
+
+    sendResponse(res,{
+        success:true,
+        statusCode:200,
+        message:"All users retrieved successfully",
+        data:result
+    });
+
+});
+
 export const userController = {
     registerUser,
-    getMyProfile
+    getMyProfile,
+    getAllUsers
 }

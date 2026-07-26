@@ -52,7 +52,25 @@ const getMyProfileFromDB = async (userId: string) => {
     return user;
 };
 
+
+
+
+const getAllUsers = async () => {
+
+    const result = await prisma.user.findMany({
+        orderBy:{
+            createdAt:"desc"
+        },
+        omit: {
+    password: true,
+  },
+    });
+
+    return result;
+};
+
 export const userService = {
     registerUserIntoDB,
-    getMyProfileFromDB
+    getMyProfileFromDB,
+    getAllUsers
 }
